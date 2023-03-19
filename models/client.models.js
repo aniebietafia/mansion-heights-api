@@ -18,11 +18,16 @@ const ClientSchema = new Schema(
       required: [true, "Email is required"],
       unique: [true, "This email already exists"],
     },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
     gender: {
       type: String,
+      enum: ["Male", "Female", "Prefer not to say"],
     },
     tel_number: {
-      type: Number,
+      type: String,
     },
   },
   { timestamps: true }
