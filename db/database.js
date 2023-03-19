@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 // Method 1 using async await
 const mongodbConnection = async (MONGODB_URL) => {
   mongoose.set("strictQuery", false);
 
   try {
-    await mongoose.connect(MONGODB_URL);
+    await mongoose.connect(MONGODB_URL, {
+      dbName: process.env.dbName,
+    });
     console.log("Database connection established");
   } catch (error) {
     console.log("Failed to connect to database");
