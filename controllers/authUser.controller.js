@@ -1,5 +1,5 @@
 const Client = require("../models/client.models");
-const Admin = require("../models/admin.models");
+const AdminUser = require("../models/adminUser.models");
 const { StatusCodes } = require("http-status-codes");
 
 const indexPage = (req, res, next) => {
@@ -16,17 +16,19 @@ const getClientRegisterForm = (req, res, next) => {
 };
 
 const postClientRegister = async (req, res, next) => {
-  res.send("Post Client Sign Up");
+  const user = req.body;
+  const client = await Client.create(user);
+  res.status(StatusCodes.CREATED).json({ client });
 };
 
 // Landlord Sign Up Functionality
-const getLandlordRegisterForm = async (req, res, next) => {
-  res.render("authUser/admin-register.ejs", {
+const getadminUserRegisterForm = async (req, res, next) => {
+  res.render("authUser/adminUser-register.ejs", {
     pageTitle: "Register | Admin",
   });
 };
 
-const postLandlordRegister = async (req, res, next) => {
+const postadminUserRegister = async (req, res, next) => {
   res.send("Post Landlord Sign Up");
 };
 
@@ -37,7 +39,7 @@ const postLandlordRegister = async (req, res, next) => {
 module.exports = {
   indexPage,
   getClientRegisterForm,
-  getLandlordRegisterForm,
+  getadminUserRegisterForm,
   postClientRegister,
-  postLandlordRegister,
+  postadminUserRegister,
 };
