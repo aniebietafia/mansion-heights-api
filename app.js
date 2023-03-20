@@ -10,10 +10,17 @@ const chalk = require("chalk");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const MemoryStore = require("memorystore")(session);
+const flash = require("connect-flash");
 
 // Invoking express app
 const app = express();
+
+// Importing custom modules and mongodb
+const mongodbConnection = require("./db/database");
+const authUserRoute = require("./routes/authUser.routes");
+const propertyRoute = require("./routes/property.routes");
+const sessionMiddleware = require("./middlewares/session.middleware");
+const flashMiddleware = require("./middlewares/flash.middleware");
 
 // middlewares
 app.use(morgan("tiny"));
@@ -21,20 +28,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(
-  session({
-    secret: process.env.secret,
-    resave: false,
-    saveUninitialized: true,
-    store: new MemoryStore({
-      checkPeriod: 86400000,
-    }),
-    cookie: {
-      secure: true,
-      maxAge: 1000 * 60 * 10,
-    },
-  })
-);
+app.use(session(sessionMiddleware));
+app.use(flash(flashMiddleware));
 
 require("./config/passport")(app);
 
@@ -44,12 +39,9 @@ app.set("views", "views");
 // or
 // app.set("views", path.join(__dirname, "views"));
 
-// Importing custom modules and mongodb
-const mongodbConnection = require("./db/database");
-const authUserRoute = require("./routes/authUser.routes");
-
 // app middlewares
 app.use("/mansion-heights", authUserRoute);
+app.use("/mansion-heights/apartments", propertyRoute);
 
 const PORT = process.env.PORT || 8000;
 
