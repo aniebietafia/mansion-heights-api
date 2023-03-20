@@ -10,7 +10,7 @@ const propertySchema = new Schema({
   home_owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    //required: true,
+    required: true,
   },
   description: {
     type: String,
@@ -29,7 +29,7 @@ const propertySchema = new Schema({
     enum: ["available", "rented"],
   },
   features: {
-    type: Array,
+    type: [String],
   },
 });
 
