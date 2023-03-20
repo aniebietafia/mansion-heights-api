@@ -1,5 +1,4 @@
-const Client = require("../models/client.models");
-const AdminUser = require("../models/adminUser.models");
+const User = require("../models/user.models");
 const { StatusCodes } = require("http-status-codes");
 
 const indexPage = (req, res, next) => {
@@ -8,38 +7,24 @@ const indexPage = (req, res, next) => {
   });
 };
 
-// Client Sign Up Functionality
-const getClientRegisterForm = (req, res, next) => {
-  res.render("authUser/client-register", {
-    pageTitle: "Register | Client",
+// Get Sign ip Form
+const getUserSignUpForm = (req, res) => {
+  res.render("authUser/user-signup", {
+    pageTitle: "Mansion Heights | Sign Up",
   });
 };
 
-const postClientRegister = async (req, res, next) => {
-  const user = req.body;
-  const client = await Client.create(user);
-  res.status(StatusCodes.CREATED).json({ client });
+const postUserSignUp = async (req, res) => {
+  const user = await User.create({ ...req.body });
+  res.status(StatusCodes.CREATED).json(user);
 };
 
-// Landlord Sign Up Functionality
-const getadminUserRegisterForm = async (req, res, next) => {
-  res.render("authUser/adminUser-register.ejs", {
-    pageTitle: "Register | Admin",
-  });
-};
+// User Login
 
-const postadminUserRegister = async (req, res, next) => {
-  res.send("Post Landlord Sign Up");
-};
-
-// Client Login
-
-// Client Logout
+// User Logout
 
 module.exports = {
   indexPage,
-  getClientRegisterForm,
-  getadminUserRegisterForm,
-  postClientRegister,
-  postadminUserRegister,
+  getUserSignUpForm,
+  postUserSignUp,
 };
