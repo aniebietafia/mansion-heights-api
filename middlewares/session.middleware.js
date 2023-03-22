@@ -1,4 +1,4 @@
-const sessionConfig = {
+const sessionMiddleware = {
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
@@ -8,4 +8,4 @@ const sessionConfig = {
   },
 };
 
-module.exports = sessionConfig;
+module.exports = sessionMiddleware;
