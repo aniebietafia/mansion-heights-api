@@ -9,4 +9,6 @@ router.route("/signup").get(authUserController.getUserSignUpForm).post(authUserC
 
 router.route("/login").get(authUserController.getLoginForm).post(authUserController.postUserLogin);
 
+router.route("/logout").post(authUserController.logout);
+
 module.exports = router;
