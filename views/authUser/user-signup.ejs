@@ -8,5 +8,47 @@
   </head>
   <body>
     <h1>User Sign Up Form</h1>
+    <form action="/mansion-heights/user/signup" method="post">
+      <div>
+        <label for="fullName">Full Name</label>
+        <input type="text" name="fullName" id="fullName" />
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+      </div>
+
+      <div>
+        <label for="gender">Gender</label>
+        <select name="gender" id="gender">
+          <option value="default">Select Option</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="none">Prefer Not to Say</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="tel">Phone Number</label>
+        <input type="text" id="tel" name="tel_number" />
+      </div>
+
+      <div>
+        <label for="user">User Role</label>
+        <select name="role" id="user">
+          <option value="default">Select Option</option>
+          <option value="Student">Student</option>
+          <option value="Home Owner">Home Owner</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <button>Sign Up</button>
+    </form>
   </body>
 </html>
