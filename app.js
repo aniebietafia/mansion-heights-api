@@ -6,11 +6,13 @@ const express = require("express");
 require("dotenv").config();
 const morgan = require("morgan");
 const chalk = require("chalk");
-// const debug = require("debug")("app");
-const passport = require("passport");
+require("express-async-errors");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
-const flash = require("connect-flash");
+// const passport = require("passport");
+// const localStrategy = require("passport-local");
+// const cookieParser = require("cookie-parser");
+// const session = require("express-session");
+// const flash = require("connect-flash");
 
 // Invoking express app
 const app = express();
@@ -19,29 +21,39 @@ const app = express();
 const mongodbConnection = require("./db/database");
 const authUserRoute = require("./routes/authUser.routes");
 const propertyRoute = require("./routes/property.routes");
-const sessionMiddleware = require("./middlewares/session.middleware");
-const flashMiddleware = require("./middlewares/flash.middleware");
+// const sessionMiddleware = require("./middlewares/session.middleware");
+// const flashMiddleware = require("./middlewares/flash.middleware");
+
+const notFoundMiddleware = require("./middlewares/not-found");
+const errorHandlerMiddleware = require("./middlewares/errorHandler.middleware");
 
 // middlewares
 app.use(morgan("tiny"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(session(sessionMiddleware));
-app.use(flash(flashMiddleware));
+app.use(cookieParser(process.env.SECRET));
+// app.use(cookieParser());
+// app.use(session(sessionMiddleware));
+// app.use(flash(flashMiddleware));
 
-require("./config/passport")(app);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passport.use(new localStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 // Setting up the ejs
 app.set("view engine", "ejs");
 app.set("views", "views");
-// or
-// app.set("views", path.join(__dirname, "views"));
 
 // app middlewares
-app.use("/mansion-heights", authUserRoute);
+app.use("/mansion-heights/user", authUserRoute);
 app.use("/mansion-heights/apartments", propertyRoute);
+
+// Error Handling
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 const PORT = process.env.PORT || 8000;
 
@@ -50,11 +62,9 @@ const start = () => {
     mongodbConnection(process.env.MONGODB_URL);
     app.listen(PORT, () => {
       console.log(`server running on http://localhost:${chalk.blue(PORT)}`);
-      // debug(`server running on http://localhost:${chalk.blue(PORT)}`);
     });
   } catch (error) {
-    // console.log(error);
-    debug(error);
+    console.log(error);
   }
 };
 start();
