@@ -1,6 +1,7 @@
 const User = require("../models/user.models");
-const { StatusCodes } = require("http-status-codes");
-const bcrypt = require("bcrypt");
+// const { StatusCodes } = require("http-status-codes");
+const CustomError = require("../errors");
+const { attachCookiesToResponse, createTokenUser } = require("../utils/index");
 
 const indexPage = (req, res, next) => {
   res.render("index", {
@@ -8,63 +9,75 @@ const indexPage = (req, res, next) => {
   });
 };
 
-// Get Sign ip Form
+// Get Sign up Form
 const getUserSignUpForm = (req, res) => {
   res.render("authUser/user-signup", {
     pageTitle: "Mansion Heights | Sign Up",
   });
 };
 
-// const hashPassword = async (pwd) => {
-//   const salt = await bcrypt.genSalt(12);
-//   const hash = await bcrypt.hash(pwd, salt);
-//   return hash;
-// };
-
+// Register New User
 const postUserSignUp = async (req, res) => {
-  // const user = await User.create({ ...req.body });
-  // res.status(StatusCodes.CREATED).json(user);
-
-  const { password, email, first_name, last_name, gender, tel_number, user_type } = req.body;
-
-  const salt = await bcrypt.genSalt(12);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
+  const { fullName, email, password, gender, tel_number, role } = req.body;
+  const emailExists = await User.findOne({ email: email });
+  if (emailExists) {
+    throw new CustomError.BadRequestError("Email already exists. Try another email.");
+  }
+  // Check if the account is first to register, then assign admin role
+  const isFirstAccount = (await User.countDocuments({})) === 0;
+  if (!isFirstAccount && role === "admin") {
+    throw new CustomError.BadRequestError("Choose a different role.");
+  }
   const user = new User({
-    first_name: first_name,
-    last_name: last_name,
-    email: email,
-    password: hashedPassword,
-    user_type: user_type,
-    gender: gender,
-    tel_number: tel_number,
+    fullName,
+    email,
+    password,
+    gender,
+    tel_number,
+    role,
   });
-
   await user.save();
-
-  res.status(StatusCodes.CREATED).json({ user });
+  const tokenUser = createTokenUser(user);
+  attachCookiesToResponse({ res, user: tokenUser });
+  res.redirect("/mansion-heights/apartments");
 };
 
-// User Login
+// Render User Login Form
 const getLoginForm = (req, res) => {
-  res.render("authUser/login");
+  res.render("authUser/user-login");
 };
 
+// Post User Login
 const postUserLogin = async (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new CustomError.BadRequestError("Provide a valid email and password");
+  }
+
   const user = await User.findOne({ email });
-  if (!email) {
-    console.log("Invalid credentials.");
+
+  if (!user) {
+    throw new CustomError.UnauthenticatedError("User does not exist. Please sign up.");
   }
-  const validatePassword = await bcrypt.compare(password, user.password);
-  if (!validatePassword) {
-    res.send("Invalid. Try again.");
-  } else {
-    res.status(StatusCodes.OK).json({ user });
+
+  const isPassword = await user.comparePassword(password);
+  if (!isPassword) {
+    throw new CustomError.UnauthenticatedError("Invalid user credentials.");
   }
+
+  // req.session.isLoggedIn = true;
+  // req.session.user = user;
+  // await req.session.save();
+
+  res.redirect("/mansion-heights/apartments");
 };
 
 // User Logout
+const logout = (req, res) => {
+  req.session.destroy();
+  res.send("Logged out");
+};
 
 module.exports = {
   indexPage,
@@ -72,4 +85,5 @@ module.exports = {
   postUserSignUp,
   getLoginForm,
   postUserLogin,
+  logout,
 };
