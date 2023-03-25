@@ -1,17 +1,22 @@
 const express = require("express");
 const router = express.Router();
 
-const authenticateUser = require("../middlewares/authentication.middleware");
-const propertyController = require("../controllers/property.controller");
+const { authenticateUser, authorizePermissions } = require("../middlewares/authentication.middleware");
+const apartmentController = require("../controllers/property.controller");
 
-router.route("/").get(propertyController.getAllProperties);
+router.route("/").get(authenticateUser, apartmentController.getAllProperties);
 
-router.route("/property").get(propertyController.getPropertyRegisterForm).post(propertyController.postProperty);
+router
+  .route("/register")
+  .get(authenticateUser, apartmentController.getPropertyRegisterForm)
+  .post(authenticateUser, apartmentController.postProperty);
 
 router
   .route("/:id")
-  .get(propertyController.getSingleProperty)
-  .patch(propertyController.editProperty)
-  .delete(propertyController.deleteProperty);
+  .get(authenticateUser, apartmentController.getSingleProperty)
+  .patch(authenticateUser, apartmentController.editProperty)
+  .delete(authenticateUser, apartmentController.deleteProperty);
+
+router.route("/:id/edit").get(apartmentController.getEditApartmentForm);
 
 module.exports = router;
