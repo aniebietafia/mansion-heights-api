@@ -8,5 +8,10 @@
   </head>
   <body>
     <h1>Single Apartment view</h1>
+    <p>Home Owner: <%= apartment.user['fullName'] %></p>
+    <p>Home Type: <%= apartment.property_type %></p>
+    <p>Views: <%= apartment.view_count %></p>
+    <p>Status: <%= apartment.status %></p>
+    <a href="/mansion-heights/apartments/<%= apartment._id %>/edit">Edit</a>
   </body>
 </html>
