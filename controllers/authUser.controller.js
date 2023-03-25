@@ -2,6 +2,8 @@ const User = require("../models/user.models");
 // const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { attachCookiesToResponse, createTokenUser } = require("../utils/index");
+const { capitalizeFullName, lowerCaseEmail } = require("../utils/setup");
+const { StatusCodes } = require("http-status-codes");
 
 const indexPage = (req, res, next) => {
   res.render("index", {
@@ -29,8 +31,8 @@ const postUserSignUp = async (req, res) => {
     throw new CustomError.BadRequestError("Choose a different role.");
   }
   const user = new User({
-    fullName,
-    email,
+    fullName: capitalizeFullName(fullName),
+    email: lowerCaseEmail(email),
     password,
     gender,
     tel_number,
@@ -55,10 +57,10 @@ const postUserLogin = async (req, res) => {
     throw new CustomError.BadRequestError("Provide a valid email and password");
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: email });
 
   if (!user) {
-    throw new CustomError.UnauthenticatedError("User does not exist. Please sign up.");
+    throw new CustomError.UnauthenticatedError("User does not exist. Please sign up first.");
   }
 
   const isPassword = await user.comparePassword(password);
@@ -66,17 +68,20 @@ const postUserLogin = async (req, res) => {
     throw new CustomError.UnauthenticatedError("Invalid user credentials.");
   }
 
-  // req.session.isLoggedIn = true;
-  // req.session.user = user;
-  // await req.session.save();
+  const tokenUser = createTokenUser(user);
+
+  attachCookiesToResponse({ res, user: tokenUser });
 
   res.redirect("/mansion-heights/apartments");
 };
 
 // User Logout
 const logout = (req, res) => {
-  req.session.destroy();
-  res.send("Logged out");
+  res.cookie("token", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.redirect("/mansion-heights/user/login");
 };
 
 module.exports = {
