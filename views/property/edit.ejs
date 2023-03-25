@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Edit Property</h1>
+    <form action="/mansion-heights/apartments/<%= apartment._id %>?_method=PATCH" method="post">
+      <div>
+        <label for="image">Image Url</label>
+        <input type="text" name="image" id="image" value="<%= apartment.image %>" />
+      </div>
+
+      <div>
+        <label for="property_type">Property Type</label>
+        <select name="property_type" id="property_type">
+          <option value="default">Choose an Option</option>
+          <option value="1 Bedroom Flat">1 Bedroom Flat</option>
+          <option value="Self Contain">Self Contain</option>
+          <option value="1 Room">1 Room</option>
+          <option value="2 Bedroom Flat">2 Bedroom Flat</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="location">Location</label>
+        <input type="text" name="location" id="location" value="<%= apartment.location %>" />
+      </div>
+
+      <div>
+        <label for="features">Features</label>
+        <input type="text" name="features" id="features" value="<%= apartment.features %>" /><br />
+        <small>Enter the apartment features separated by commas</small>
+      </div>
+
+      <div>
+        <label for="desc">Description</label>
+        <textarea name="description" id="desc" cols="30" rows="10"><%= apartment.description %></textarea>
+      </div>
+
+      <button>Submit</button>
+    </form>
+  </body>
+</html>
