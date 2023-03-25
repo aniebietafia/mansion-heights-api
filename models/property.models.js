@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const propertySchema = new Schema({
-  image_url: {
+const apartmentSchema = new Schema({
+  image: {
     type: String,
     required: true,
     trim: true,
   },
-  home_owner: {
-    type: Schema.Types.ObjectId,
+  user: {
+    type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
   },
@@ -19,18 +19,23 @@ const propertySchema = new Schema({
   },
   property_type: {
     type: String,
-    enum: ["1 Bedroom Flat", "Self Contain", "1 Room", "2 Bedroom Flat"],
+    enum: ["default", "1 Bedroom Flat", "Self Contain", "1 Room", "2 Bedroom Flat"],
+  },
+  location: {
+    type: String,
   },
   view_count: {
     type: Number,
+    default: 0,
   },
   status: {
     type: String,
-    enum: ["available", "rented"],
+    enum: ["under review", "approved"],
+    default: "under review",
   },
   features: {
     type: [String],
   },
 });
 
-module.exports = mongoose.model("Property", propertySchema);
+module.exports = mongoose.model("Apartment", apartmentSchema);
