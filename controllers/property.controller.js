@@ -41,7 +41,12 @@ const getPropertyRegisterForm = (req, res) => {
 // User creates a new property
 const postProperty = async (req, res) => {
   req.body.user = req.user.userId;
-  const apartment = await Apartment.create(req.body);
+  const apartment = new Apartment(req.body);
+  apartment.images = req.files.map((el) => ({
+    url: el.path,
+    filename: el.filename,
+  }));
+  await apartment.save();
   res.redirect(`/mansion-heights/apartments/${apartment._id}`);
 };
 
@@ -57,11 +62,6 @@ const getEditApartmentForm = async (req, res) => {
 const editProperty = async (req, res) => {
   const { id: propertyId } = req.params;
 
-  // const lodge = await Apartment.findById({ _id: propertyId });
-  // if (!lodge.user.equals(req.user._id)) {
-  //   return res.send("You don't have permission to do that");
-  // }
-
   const apartment = await Apartment.findOneAndUpdate({ _id: propertyId }, req.body, { new: true, runValidators: true });
 
   if (!apartment) {
@@ -74,11 +74,6 @@ const editProperty = async (req, res) => {
 const deleteProperty = async (req, res) => {
   const { id: propertyId } = req.params;
   await Property.findOneAndRemove({ _id: propertyId });
-
-  // if (!apartment) {
-  //   throw new CustomError.NotFoundError("This property does not exist.");
-  // }
-  // await apartment.remove();
 
   res.status(StatusCodes.OK).json({ msg: "Property deleted" });
 };
