@@ -3,13 +3,6 @@ const User = require("../models/user.models");
 const CustomError = require("../errors");
 const { attachCookiesToResponse, createTokenUser } = require("../utils/index");
 const { capitalizeFullName, lowerCaseEmail } = require("../utils/algorithms");
-const { StatusCodes } = require("http-status-codes");
-
-const indexPage = (req, res, next) => {
-  res.render("index", {
-    pageTitle: "Landing Page",
-  });
-};
 
 // Get Sign up Form
 const getUserSignUpForm = (req, res) => {
@@ -85,7 +78,6 @@ const logout = (req, res) => {
 };
 
 module.exports = {
-  indexPage,
   getUserSignUpForm,
   postUserSignUp,
   getLoginForm,
