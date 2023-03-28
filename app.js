@@ -9,10 +9,6 @@ const chalk = require("chalk");
 require("express-async-errors");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
-// const passport = require("passport");
-// const localStrategy = require("passport-local");
-// const cookieParser = require("cookie-parser");
-// const session = require("express-session");
 const flash = require("connect-flash");
 
 // Invoking express app
@@ -22,7 +18,6 @@ const app = express();
 const mongodbConnection = require("./db/database");
 const authUserRoute = require("./routes/authUser.routes");
 const propertyRoute = require("./routes/property.routes");
-// const sessionMiddleware = require("./middlewares/session.middleware");
 const flashMiddleware = require("./middlewares/flash.middleware");
 
 const notFoundMiddleware = require("./middlewares/not-found");
@@ -34,16 +29,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.SECRET));
-// app.use(cookieParser());
-// app.use(session(sessionMiddleware));
 app.use(flash(flashMiddleware));
 app.use(methodOverride("_method"));
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-// passport.use(new localStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 
 // Setting up the ejs
 app.set("view engine", "ejs");
