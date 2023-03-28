@@ -12,6 +12,11 @@
     <p>Home Type: <%= apartment.property_type %></p>
     <p>Views: <%= apartment.view_count %></p>
     <p>Status: <%= apartment.status %></p>
+    <% for (let img of apartment.images) { %>
+    <div>
+      <img src="<%= img.url %>" alt="" height="200" width="200" />
+    </div>
+    <% } %>
     <a href="/mansion-heights/apartments/<%= apartment._id %>/edit">Edit</a>
   </body>
 </html>
