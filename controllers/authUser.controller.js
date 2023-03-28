@@ -2,7 +2,7 @@ const User = require("../models/user.models");
 // const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { attachCookiesToResponse, createTokenUser } = require("../utils/index");
-const { capitalizeFullName, lowerCaseEmail } = require("../utils/setup");
+const { capitalizeFullName, lowerCaseEmail } = require("../utils/algorithms");
 const { StatusCodes } = require("http-status-codes");
 
 const indexPage = (req, res, next) => {
