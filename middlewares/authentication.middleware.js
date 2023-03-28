@@ -1,6 +1,5 @@
 const CustomError = require("../errors");
 const { isTokenValid } = require("../utils");
-const Apartment = require("../models/property.models");
 
 const authenticateUser = async (req, res, next) => {
   const token = req.signedCookies.token;
