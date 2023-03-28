@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const apartmentSchema = new Schema({
-  image: {
-    type: String,
-    required: true,
-    trim: true,
-  },
+  images: [
+    {
+      url: String,
+      filename: String,
+    },
+  ],
   user: {
     type: mongoose.Types.ObjectId,
     ref: "User",
@@ -23,6 +24,7 @@ const apartmentSchema = new Schema({
   },
   location: {
     type: String,
+    required: true,
   },
   view_count: {
     type: Number,
@@ -34,8 +36,23 @@ const apartmentSchema = new Schema({
     default: "under review",
   },
   features: {
-    type: [String],
+    type: Array,
   },
 });
+
+// apartmentSchema.pre("save", (userInput) => {
+//   const newInput = userInput.split(", ");
+//   newInput.forEach((el) => {
+//     return features.push(el);
+//   });
+//   return features;
+// });
+// apartmentSchema.methods.formatFeatures = function (userInput) {
+//   const newInput = userInput.split(", ");
+//   newInput.forEach((el) => {
+//     return features.push(el);
+//   });
+//   return features;
+// };
 
 module.exports = mongoose.model("Apartment", apartmentSchema);
