@@ -36,15 +36,9 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-app.use("/", (req, res) => {
-  res.render("index", {
-    pageTitle: "Landing Page",
-  });
-});
-
 // app middlewares
-app.use("/mansion-heights/user", authUserRoute);
-app.use("/mansion-heights/apartments", propertyRoute);
+app.use("/lodge-finder/user", authUserRoute);
+app.use(propertyRoute);
 
 // Error Handling
 app.use(notFoundMiddleware);
