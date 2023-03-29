@@ -24,7 +24,7 @@ const UserSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ["Male", "Female", "Prefer Not to Say"],
+      enum: ["Male", "Female", "undisclosed", "none"],
     },
     tel_number: {
       type: String,
@@ -32,7 +32,7 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["Home Owner", "Student", "admin"],
+      enum: ["Home Owner", "Student", "admin", "none"],
       required: true,
     },
   },
