@@ -8,19 +8,21 @@ const upload = multer({ storage });
 const { authenticateUser, authorizePermissions } = require("../middlewares/authentication.middleware");
 const apartmentController = require("../controllers/property.controller");
 
-router.route("/").get(authenticateUser, apartmentController.getAllProperties);
+router.route("/").get(apartmentController.indexPage);
+
+router.route("/lodge-finder/apartments").get(authenticateUser, apartmentController.getAllProperties);
 
 router
-  .route("/register")
+  .route("/lodge-finder/register")
   .get(authenticateUser, apartmentController.getPropertyRegisterForm)
   .post(authenticateUser, upload.array("image"), apartmentController.postProperty);
 
 router
-  .route("/:id")
+  .route("/lodge-finder/:id")
   .get(authenticateUser, apartmentController.getSingleProperty)
   .patch(authenticateUser, apartmentController.editProperty)
   .delete(authenticateUser, apartmentController.deleteProperty);
 
-router.route("/:id/edit").get(apartmentController.getEditApartmentForm);
+router.route("/lodge-finder/:id/edit").get(apartmentController.getEditApartmentForm);
 
 module.exports = router;
