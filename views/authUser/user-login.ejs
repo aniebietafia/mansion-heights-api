@@ -5,18 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css" />
   </head>
   <body>
-    <form action="/mansion-heights/user/login" method="post">
-      <div>
-        <label for="email">Email</label>
-        <input type="text" name="email" />
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" />
-      </div>
-      <button>Login</button>
-    </form>
+    <div class="container">
+      <h1>Login</h1>
+      <form action="/lodge-finder/user/login" method="post">
+        <div>
+          <label for="email">Email</label>
+          <input type="text" name="email" />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" name="password" />
+        </div>
+        <button class="btn">Login</button>
+      </form>
+      <p>No account yet? <a href="/lodge-finder/user/signup">Sign Up</a></p>
+    </div>
   </body>
 </html>
