@@ -5,49 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/signup.css" />
+    <script src="/js/signup.js" defer></script>
   </head>
   <body>
-    <h1>User Sign Up Form</h1>
-    <form action="/mansion-heights/user/signup" method="post">
-      <div>
-        <label for="fullName">Full Name</label>
-        <input type="text" name="fullName" id="fullName" />
-      </div>
+    <div class="container">
+      <h1>Sign Up Today</h1>
+      <form action="/lodge-finder/user/signup" method="post">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" name="fullName" id="fullName" />
+        </div>
 
-      <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" />
-      </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" name="email" id="email" />
+        </div>
 
-      <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
-      </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" />
+        </div>
 
-      <div>
-        <label for="gender">Gender</label>
-        <select name="gender" id="gender">
-          <option value="default">Select Option</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="none">Prefer Not to Say</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select name="gender" id="gender">
+            <option value="none">Select Option</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="undisclosed">Prefer Not to Say</option>
+          </select>
+        </div>
 
-      <div>
-        <label for="tel">Phone Number</label>
-        <input type="text" id="tel" name="tel_number" />
-      </div>
+        <div class="form-group">
+          <label for="tel">Phone Number</label>
+          <input type="tel" id="tel" name="tel_number" />
+        </div>
 
-      <div>
-        <label for="user">User Role</label>
-        <select name="role" id="user">
-          <option value="default">Select Option</option>
-          <option value="Student">Student</option>
-          <option value="Home Owner">Home Owner</option>
-        </select>
-      </div>
-      <button>Sign Up</button>
-    </form>
+        <div class="form-group">
+          <label for="user">User Role</label>
+          <select name="role" id="user">
+            <option value="none">Select Option</option>
+            <option value="Student">Student</option>
+            <option value="Home Owner">Home Owner</option>
+          </select>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
   </body>
 </html>
