@@ -2,6 +2,12 @@ const Apartment = require("../models/property.models");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 
+const indexPage = (req, res) => {
+  res.render("index", {
+    pageTitle: "Lodge Finder",
+  });
+};
+
 // Find all Properties
 const getAllProperties = async (req, res) => {
   const apartments = await Apartment.find({}).populate({
@@ -47,7 +53,7 @@ const postProperty = async (req, res) => {
     filename: el.filename,
   }));
   await apartment.save();
-  res.redirect(`/mansion-heights/apartments/${apartment._id}`);
+  res.redirect(`/lodge-finder/apartments/${apartment._id}`);
 };
 
 // Get edit apartment form
@@ -67,18 +73,19 @@ const editProperty = async (req, res) => {
   if (!apartment) {
     throw new CustomError.NotFoundError("This apartment does not exist");
   }
-  res.redirect(`/mansion-heights/apartments/${apartment._id}`);
+  res.redirect(`/lodge-finder/apartments/${apartment._id}`);
 };
 
 // User deletes a property
 const deleteProperty = async (req, res) => {
   const { id: propertyId } = req.params;
-  await Property.findOneAndRemove({ _id: propertyId });
+  await Apartment.findOneAndRemove({ _id: propertyId });
 
   res.status(StatusCodes.OK).json({ msg: "Property deleted" });
 };
 
 module.exports = {
+  indexPage,
   getPropertyRegisterForm,
   getAllProperties,
   postProperty,
