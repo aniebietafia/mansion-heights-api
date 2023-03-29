@@ -34,7 +34,7 @@ const postUserSignUp = async (req, res) => {
   await user.save();
   const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
-  res.redirect("/mansion-heights/apartments");
+  res.redirect("/lodge-finder/apartments");
 };
 
 // Render User Login Form
@@ -65,7 +65,7 @@ const postUserLogin = async (req, res) => {
 
   attachCookiesToResponse({ res, user: tokenUser });
 
-  res.redirect("/mansion-heights/apartments");
+  res.redirect("/lodge-finder/apartments");
 };
 
 // User Logout
@@ -74,7 +74,7 @@ const logout = (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now()),
   });
-  res.redirect("/mansion-heights/user/login");
+  res.redirect("/lodge-finder/user/login");
 };
 
 module.exports = {
