@@ -74,8 +74,7 @@ const postUserLogin = async (req, res) => {
   }
 
   // create a token for the user
-  const tokenUser = createTokenUser(user);
-
+  const tokenUser = { fullName: user.fullName, userId: user._id, role: user.role };
   attachCookiesToResponse({ res, user: tokenUser });
 
   // if token is verified, login user and redirect user to the apartments page
