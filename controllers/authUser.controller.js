@@ -15,7 +15,9 @@ const postUserSignUp = async (req, res) => {
   const { fullName, email, password, gender, tel_number, role } = req.body;
   const emailExists = await User.findOne({ email: email });
   if (emailExists) {
-    throw new CustomError.BadRequestError("Email already exists. Try another email.");
+    // throw new CustomError.BadRequestError("Email already exists. Try another email.");
+    req.flash("error", "Email already exists. Try another email.");
+    return res.redirect("/lodge-finder/user/signup");
   }
   // Check if the account is first in the database to register, then assign admin role
   const isFirstAccount = (await User.countDocuments({})) === 0;
