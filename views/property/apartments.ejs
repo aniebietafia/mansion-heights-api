@@ -5,19 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/apartments.css" />
   </head>
   <body>
-    <h1>Uploaded Apartments</h1>
-    <% for (let apartment of apartments) { %>
-    <div>
-      <h2><%= apartment.image %></h2>
-      <p><%= apartment.description %></p>
-      <a href="/lodge-finder/apartments/<%= apartment._id %>">More Info</a>
-    </div>
-    <% } %>
+    <header>
+      <nav>
+        <div class="logo-link">
+          <h2>Lodge<span>Finder</span></h2>
+        </div>
+        <div class="nav-links">
+          <ul>
+            <li><a href="/lodge-finder/apartments">All Apartments</a></li>
+            <li><a href="/lodge-finder/register">Add Property</a></li>
+          </ul>
+        </div>
+        <div class="logout">
+          <form action="/lodge-finder/user/logout" method="post">
+            <button>Logout</button>
+          </form>
+        </div>
+      </nav>
+    </header>
 
-    <form action="/lodge-finder/user/logout" method="post">
-      <button>Logout</button>
-    </form>
+    <div class="section-center featured-center">
+      <% for (let apartment of apartments) { %>
+      <article class="features-card">
+        <% for (let img of apartment.images) { %>
+        <div class="feature-img-container">
+          <img src="<%= img.url %>" alt="" class="feature-img" />
+        </div>
+        <% } %>
+        <div class="feature-info">
+          <h4>Type of Lodge: <%= apartment.property_type %></h4>
+        </div>
+        <p><%= apartment.description.substring(0, 150) %></p>
+        <div>
+          <p>Status: <%= apartment.status %></p>
+        </div>
+        <a href="/lodge-finder/<%= apartment._id %>" class="btn">More Info</a>
+        <!-- <form action="/lodge-finder/<%= apartment._id %>?_method=DELETE" method="post">
+          <button>DELETE</button>
+        </form> -->
+      </article>
+      <% } %>
+    </div>
   </body>
 </html>
