@@ -11,25 +11,26 @@
   <body>
     <div class="container">
       <h1>Sign Up Today</h1>
-      <form action="/lodge-finder/user/signup" method="post">
+
+      <form action="/lodge-finder/user/signup" method="post" novalidate>
         <div class="form-group">
           <label for="fullName">Full Name</label>
-          <input type="text" name="fullName" id="fullName" />
+          <input type="text" name="fullName" id="fullName" required />
         </div>
 
         <div class="form-group">
           <label for="email">Email Address</label>
-          <input type="email" name="email" id="email" />
+          <input type="email" name="email" id="email" required />
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" name="password" id="password" />
+          <input type="password" name="password" id="password" required />
         </div>
 
         <div class="form-group">
           <label for="gender">Gender</label>
-          <select name="gender" id="gender">
+          <select name="gender" id="gender" required>
             <option value="none">Select Option</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -39,19 +40,24 @@
 
         <div class="form-group">
           <label for="tel">Phone Number</label>
-          <input type="tel" id="tel" name="tel_number" />
+          <input type="tel" id="tel" name="tel_number" required />
         </div>
 
         <div class="form-group">
           <label for="user">User Role</label>
-          <select name="role" id="user">
-            <option value="none">Select Option</option>
+          <select name="role" id="user" required>
+            <option value="admin">Select Option</option>
             <option value="Student">Student</option>
             <option value="Home Owner">Home Owner</option>
           </select>
+          <small><%= signupError %></small>
         </div>
         <button type="submit">Sign Up</button>
       </form>
+      <!-- Message container -->
+      <!-- <div class="message-container">
+        <h3 id="message"></h3>
+      </div> -->
     </div>
   </body>
 </html>
