@@ -14,7 +14,7 @@ router.route("/lodge-finder/apartments").get(authenticateUser, apartmentControll
 
 router
   .route("/lodge-finder/register")
-  .get(authenticateUser, apartmentController.getPropertyRegisterForm)
+  .get(authenticateUser, authorizePermissions("admin", "Home Owner"), apartmentController.getPropertyRegisterForm)
   .post(authenticateUser, upload.array("image"), apartmentController.postProperty);
 
 router
