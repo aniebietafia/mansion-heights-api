@@ -1,5 +1,5 @@
 const Apartment = require("../models/property.models");
-const { StatusCodes } = require("http-status-codes");
+const User = require("../models/user.models");
 const CustomError = require("../errors");
 
 const indexPage = (req, res) => {
@@ -15,7 +15,7 @@ const getAllProperties = async (req, res) => {
     select: "fullName",
   });
   res.render("property/apartments", {
-    pageTitle: "Mansion Heights",
+    pageTitle: "Lodge Finder",
     apartments,
   });
 };
@@ -40,7 +40,7 @@ const getSingleProperty = async (req, res) => {
 };
 
 // Get Property Register form
-const getPropertyRegisterForm = (req, res) => {
+const getPropertyRegisterForm = async (req, res) => {
   res.render("property/register_property");
 };
 
@@ -53,7 +53,7 @@ const postProperty = async (req, res) => {
     filename: el.filename,
   }));
   await apartment.save();
-  res.redirect(`/lodge-finder/apartments/${apartment._id}`);
+  res.redirect(`/lodge-finder/${apartment._id}`);
 };
 
 // Get edit apartment form
@@ -78,10 +78,11 @@ const editProperty = async (req, res) => {
 
 // User deletes a property
 const deleteProperty = async (req, res) => {
+  req.body.user = req.user.userId;
   const { id: propertyId } = req.params;
   await Apartment.findOneAndRemove({ _id: propertyId });
 
-  res.status(StatusCodes.OK).json({ msg: "Property deleted" });
+  res.redirect("/lodge-finder/apartments");
 };
 
 module.exports = {
