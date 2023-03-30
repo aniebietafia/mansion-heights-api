@@ -18,6 +18,7 @@ const app = express();
 const mongodbConnection = require("./db/database");
 const authUserRoute = require("./routes/authUser.routes");
 const propertyRoute = require("./routes/property.routes");
+const sessionMiddleware = require("./middlewares/sessions.middleware");
 const flashMiddleware = require("./middlewares/flash.middleware");
 
 const notFoundMiddleware = require("./middlewares/not-found");
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.SECRET));
+app.use(sessionMiddleware);
 app.use(flash(flashMiddleware));
 app.use(methodOverride("_method"));
 
