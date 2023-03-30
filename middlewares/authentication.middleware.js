@@ -18,21 +18,12 @@ const authenticateUser = async (req, res, next) => {
 
 const authorizePermissions = (...roles) => {
   return (req, res, next) => {
-    if (roles.includes(req.user.role !== "Student")) {
+    if (!roles.includes(req.user.role)) {
       throw new CustomError.UnauthorizedError("You're not authorized to access this resource.");
     }
     next();
   };
 };
-
-// const authorizePermissions = (...roles) => {
-//   return (req, res, next) => {
-//     if (!roles.includes(req.user.role)) {
-//       throw new CustomError.UnauthorizedError("You're not authorized to access this resource.");
-//     }
-//     next();
-//   };
-// };
 
 module.exports = {
   authenticateUser,
