@@ -4,19 +4,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title><%= pageTitle %></title>
   </head>
   <body>
+    <a href="/lodge-finder/apartments">All Apartments</a>
     <h1>Single Apartment view</h1>
-    <p>Home Owner: <%= apartment.user['fullName'] %></p>
-    <p>Home Type: <%= apartment.property_type %></p>
-    <p>Views: <%= apartment.view_count %></p>
-    <p>Status: <%= apartment.status %></p>
     <% for (let img of apartment.images) { %>
     <div>
       <img src="<%= img.url %>" alt="" height="200" width="200" />
     </div>
     <% } %>
+    <p>Home Owner: <%= apartment.user['fullName'] %></p>
+    <p>Home Type: <%= apartment.property_type %></p>
+    <p>Viewed: <%= apartment.view_count %> time(s)</p>
+    <p>Status: <%= apartment.status %></p>
+    <p>Location: <%= apartment.location %></p>
+    <% for (const feature of apartment.features){%>
+    <ul>
+      <li><%= feature %></li>
+    </ul>
+    <%} %>
+
     <a href="/lodge-finder/<%= apartment._id %>/edit">Edit</a>
   </body>
 </html>
