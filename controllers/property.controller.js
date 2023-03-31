@@ -67,10 +67,10 @@ const postProperty = async (req, res) => {
 
 // Get edit apartment form
 const getEditApartmentForm = async (req, res) => {
-  // const apartment = await Apartment.findById(req.params.id);
+  const apartment = await Apartment.findById(req.params.id);
   res.render("property/edit", {
     pageTitle: "Edit Lodge",
-    // apartment,
+    apartment,
   });
 };
 
