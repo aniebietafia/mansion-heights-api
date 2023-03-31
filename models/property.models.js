@@ -40,19 +40,4 @@ const apartmentSchema = new Schema({
   },
 });
 
-// apartmentSchema.pre("save", (userInput) => {
-//   const newInput = userInput.split(", ");
-//   newInput.forEach((el) => {
-//     return features.push(el);
-//   });
-//   return features;
-// });
-// apartmentSchema.methods.formatFeatures = function (userInput) {
-//   const newInput = userInput.split(", ");
-//   newInput.forEach((el) => {
-//     return features.push(el);
-//   });
-//   return features;
-// };
-
 module.exports = mongoose.model("Apartment", apartmentSchema);
