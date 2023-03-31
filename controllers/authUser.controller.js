@@ -85,7 +85,7 @@ const postUserLogin = async (req, res) => {
 
 // User Logout
 const logout = (req, res) => {
-  // removes token and sets expiry date to the current time to logout user
+  // removes token and sets expiry date to the current time to log user out
   res.cookie("token", "logout", {
     httpOnly: true,
     expires: new Date(Date.now()),
