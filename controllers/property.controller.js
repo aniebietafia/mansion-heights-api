@@ -1,6 +1,6 @@
 const Apartment = require("../models/property.models");
-const User = require("../models/user.models");
 const CustomError = require("../errors");
+const { convertFeaturesToArray } = require("../utils/algorithms");
 
 const indexPage = (req, res) => {
   res.render("index", {
@@ -35,6 +35,7 @@ const getSingleProperty = async (req, res) => {
   apartment.view_count += 1;
   await apartment.save();
   res.render("property/apartment", {
+    pageTitle: `Lodge | ${req.user.fullName}`,
     apartment,
   });
 };
@@ -47,7 +48,15 @@ const getPropertyRegisterForm = async (req, res) => {
 // User creates a new property
 const postProperty = async (req, res) => {
   req.body.user = req.user.userId;
-  const apartment = new Apartment(req.body);
+  const { images, user, description, property_type, location, features } = req.body;
+  const apartment = new Apartment({
+    images: images,
+    user: user,
+    description: description,
+    property_type: property_type,
+    location: location,
+    features: convertFeaturesToArray(features),
+  });
   apartment.images = req.files.map((el) => ({
     url: el.path,
     filename: el.filename,
@@ -58,14 +67,16 @@ const postProperty = async (req, res) => {
 
 // Get edit apartment form
 const getEditApartmentForm = async (req, res) => {
-  const apartment = await Apartment.findById(req.params.id);
+  // const apartment = await Apartment.findById(req.params.id);
   res.render("property/edit", {
-    apartment,
+    pageTitle: "Edit Lodge",
+    // apartment,
   });
 };
 
 // User edits the current property
 const editProperty = async (req, res) => {
+  // console.log(req.user);
   const { id: propertyId } = req.params;
 
   const apartment = await Apartment.findOneAndUpdate({ _id: propertyId }, req.body, { new: true, runValidators: true });
@@ -73,12 +84,11 @@ const editProperty = async (req, res) => {
   if (!apartment) {
     throw new CustomError.NotFoundError("This apartment does not exist");
   }
-  res.redirect(`/lodge-finder/apartments/${apartment._id}`);
+  res.redirect(`/lodge-finder/${apartment._id}`);
 };
 
 // User deletes a property
 const deleteProperty = async (req, res) => {
-  req.body.user = req.user.userId;
   const { id: propertyId } = req.params;
   await Apartment.findOneAndRemove({ _id: propertyId });
 
