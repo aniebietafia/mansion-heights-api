@@ -1,5 +1,5 @@
 const User = require("../models/user.models");
-const { attachCookiesToResponse } = require("../utils/index");
+const { attachCookiesToResponse, createTokenUser } = require("../utils/index");
 const { capitalizeFullName, lowerCaseEmail } = require("../utils/algorithms");
 
 // Get Sign up Form
@@ -35,7 +35,7 @@ const postUserSignUp = async (req, res) => {
   });
   await user.save();
 
-  const tokenUser = { fullName: user.fullName, userId: user._id, role: user.role };
+  const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
 
   res.redirect("/lodge-finder/apartments");
