@@ -19,6 +19,7 @@ const app = express();
 const mongodbConnection = require("./db/database");
 const authUserRoute = require("./routes/authUser.routes");
 const propertyRoute = require("./routes/property.routes");
+const adminRoute = require("./routes/adminUser.routes");
 const sessionMiddleware = require("./middlewares/sessions.middleware");
 const flashMiddleware = require("./middlewares/flash.middleware");
 
@@ -43,6 +44,7 @@ app.set("views", "views");
 // app middlewares
 app.use(propertyRoute);
 app.use("/lodge-finder/user", authUserRoute);
+app.use("/lodge-finder/admin", adminRoute);
 
 // Error Handling
 app.use(notFoundMiddleware);
