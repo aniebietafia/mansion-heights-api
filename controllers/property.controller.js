@@ -1,6 +1,6 @@
 const Apartment = require("../models/property.models");
 const CustomError = require("../errors");
-const { convertFeaturesToArray } = require("../utils/algorithms");
+const { convertFeaturesToArray, checkPermissions } = require("../utils/index");
 
 const indexPage = (req, res) => {
   res.render("index", {
@@ -15,6 +15,7 @@ const getAllProperties = async (req, res) => {
     select: "fullName",
   });
   res.render("property/apartments", {
+    currentUser: req.user.fullName,
     pageTitle: "Lodge Finder",
     apartments,
   });
@@ -35,7 +36,8 @@ const getSingleProperty = async (req, res) => {
   apartment.view_count += 1;
   await apartment.save();
   res.render("property/apartment", {
-    pageTitle: `Lodge | ${req.user.fullName}`,
+    pageTitle: "Lodge",
+    userObj: req.user,
     apartment,
   });
 };
@@ -68,6 +70,13 @@ const postProperty = async (req, res) => {
 // Get edit apartment form
 const getEditApartmentForm = async (req, res) => {
   const apartment = await Apartment.findById(req.params.id);
+  checkPermissions(req.user, apartment.user);
+  if (req.user.role === "admin") {
+    return res.render("admin/edit", {
+      pageTitle: "Edit Lodge | Admin",
+      apartment,
+    });
+  }
   res.render("property/edit", {
     pageTitle: "Edit Lodge",
     apartment,
@@ -76,14 +85,20 @@ const getEditApartmentForm = async (req, res) => {
 
 // User edits the current property
 const editProperty = async (req, res) => {
-  // console.log(req.user);
-  const { id: propertyId } = req.params;
+  const { id: lodgeId } = req.params;
+  // const id = req.params.id;
 
-  const apartment = await Apartment.findOneAndUpdate({ _id: propertyId }, req.body, { new: true, runValidators: true });
+  const apartment = await Apartment.findByIdAndUpdate(
+    { _id: lodgeId },
+    { ...req.body },
+    { new: true, runValidators: true }
+  );
+  // const apartment = await Apartment.findByIdAndUpdate(id, {...req.body}, { new: true, runValidators: true });
 
   if (!apartment) {
     throw new CustomError.NotFoundError("This apartment does not exist");
   }
+
   res.redirect(`/lodge-finder/${apartment._id}`);
 };
 
