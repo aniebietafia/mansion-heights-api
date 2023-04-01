@@ -20,7 +20,7 @@ const apartmentSchema = new Schema({
   },
   property_type: {
     type: String,
-    enum: ["default", "1 Bedroom Flat", "Self Contain", "1 Room", "2 Bedroom Flat"],
+    required: true,
   },
   location: {
     type: String,
