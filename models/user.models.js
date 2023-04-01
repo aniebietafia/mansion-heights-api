@@ -12,7 +12,6 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
-      // unique: [true, "This email already exists"],
       match: [
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         "Please provide a valid email",
@@ -38,8 +37,6 @@ const UserSchema = new Schema(
   },
   { timestamps: true }
 );
-
-// UserSchema.plugin(passportLocalMongoose);
 
 UserSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(12);
