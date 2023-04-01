@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle %></title>
+  </head>
+  <body>
+    <h1>All Users</h1>
+    <% for (const user of users) { %>
+    <div>
+      <p><%= user.fullName %></p>
+      <p><%= user.role %></p>
+      <p><%= user.gender %></p>
+      <p><%= user.tel_number %></p>
+      <p><%= user.email %></p>
+    </div>
+    <% } %>
+  </body>
+</html>
