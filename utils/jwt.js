@@ -13,12 +13,12 @@ const isTokenValid = ({ token }) => {
 const attachCookiesToResponse = ({ res, user }) => {
   const token = createJWT({ payload: user });
 
-  const thirtyDays = 1000 * 60 * 60 * 24 * 30;
+  const twentyFourHours = 1000 * 60 * 60 * 24;
 
   // adding jwt token to the response of a created user
   res.cookie("token", token, {
     httpOnly: true,
-    expires: new Date(Date.now() + thirtyDays),
+    expires: new Date(Date.now() + twentyFourHours),
     secure: process.env.NODE_ENV === "production",
     signed: true,
   });
