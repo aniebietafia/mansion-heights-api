@@ -16,7 +16,6 @@ router
   .route("/lodge-finder/register")
   .get([authenticateUser, authorizePermissions("admin", "Home Owner")], apartmentController.getPropertyRegisterForm)
   .post(
-    authenticateUser,
     [authenticateUser, authorizePermissions("admin", "Home Owner")],
     upload.array("image"),
     apartmentController.postProperty
@@ -25,9 +24,11 @@ router
 router
   .route("/lodge-finder/:id")
   .get(authenticateUser, apartmentController.getSingleProperty)
-  .patch(authenticateUser, apartmentController.editProperty)
-  .delete(authenticateUser, apartmentController.deleteProperty);
+  .patch([authenticateUser, authorizePermissions("admin", "Home Owner")], apartmentController.editProperty)
+  .delete([authenticateUser, authorizePermissions("admin", "Home Owner")], apartmentController.deleteProperty);
 
-router.route("/lodge-finder/:id/edit").get(apartmentController.getEditApartmentForm);
+router
+  .route("/lodge-finder/:id/edit")
+  .get([authenticateUser, authorizePermissions("admin", "Home Owner")], apartmentController.getEditApartmentForm);
 
 module.exports = router;
