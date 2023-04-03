@@ -38,11 +38,13 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
+// Hashing password before storing in the database
 UserSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(12);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+// Instance method to compare passwords before logging in
 UserSchema.methods.comparePassword = async function (enteredPassword) {
   const isPasswordMatch = await bcrypt.compare(enteredPassword, this.password);
   return isPasswordMatch;
