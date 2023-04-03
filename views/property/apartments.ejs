@@ -9,23 +9,25 @@
   </head>
   <body>
     <header>
-      <nav>
-        <div class="logo-link">
-          <h2>Lodge<span>Finder</span></h2>
-        </div>
-        <div class="nav-links">
-          <ul>
-            <li><a href="/lodge-finder/apartments">All Apartments</a></li>
-            <li><a href="/lodge-finder/register">Add Property</a></li>
+      <nav class="nav-bar">
+        <div class="nav-center">
+          <div class="nav-header">
+            <h2 class="nav-logo">Lodge<span>Finder</span></h2>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="/lodge-finder/apartments" class="nav-link">All Apartments</a></li>
+            <li><a href="/lodge-finder/register" class="nav-link">Add Property</a></li>
+            <li><a href="/lodge-finder/admin/users" class="nav-link">All Users</a></li>
           </ul>
-        </div>
-        <div>
-          <p><%= currentUser %></p>
-        </div>
-        <div class="logout">
-          <form action="/lodge-finder/user/logout" method="post">
-            <button>Logout</button>
-          </form>
+
+          <p class="current-user">Logged in as: <%= currentUser.fullName %></p>
+
+          <div class="logout">
+            <form action="/lodge-finder/user/logout" method="post">
+              <button class="btn">Logout</button>
+            </form>
+          </div>
         </div>
       </nav>
     </header>
@@ -46,9 +48,6 @@
           <p>Status: <%= apartment.status %></p>
         </div>
         <a href="/lodge-finder/<%= apartment._id %>" class="btn">More Info</a>
-        <!-- <form action="/lodge-finder/<%= apartment._id %>?_method=DELETE" method="post">
-          <button>DELETE</button>
-        </form> -->
       </article>
       <% } %>
     </div>
