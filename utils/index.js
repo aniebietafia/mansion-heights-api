@@ -1,7 +1,7 @@
 const { createJWT, isTokenValid, attachCookiesToResponse } = require("./jwt");
 const { createTokenUser } = require("./createTokenUser");
 const checkPermissions = require("./checkPermissions");
-const { capitalizeFullName, lowerCaseEmail } = require("./algorithms");
+const { capitalizeFullName, lowerCaseEmail, convertFeaturesToArray } = require("./algorithms");
 
 module.exports = {
   createJWT,
@@ -11,4 +11,5 @@ module.exports = {
   checkPermissions,
   capitalizeFullName,
   lowerCaseEmail,
+  convertFeaturesToArray,
 };
