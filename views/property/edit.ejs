@@ -7,7 +7,7 @@
     <title><%= pageTitle %></title>
   </head>
   <body>
-    <h1>Edit Property</h1>
+    <h1>Edit Lodge</h1>
     <form action="/lodge-finder/<%= apartment.id %>?_method=PATCH" method="post" enctype="multipart/form-data">
       <div>
         <input type="file" name="image" id="" />
@@ -34,7 +34,7 @@
         <textarea name="description" id="desc" cols="30" rows="10"><%= apartment.description %></textarea>
       </div>
 
-      <button>Submit</button>
+      <button>Update Lodge</button>
     </form>
   </body>
 </html>
