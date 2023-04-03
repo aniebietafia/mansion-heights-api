@@ -86,11 +86,19 @@ const getEditApartmentForm = async (req, res) => {
 // controller to update lodge
 const editProperty = async (req, res) => {
   const { id: lodgeId } = req.params;
+  const { images, description, property_type, location, status, features } = req.body;
   const apartment = await Apartment.findOne({ _id: lodgeId });
 
   checkPermissions(req.user, apartment.user);
 
-  await apartment.updateOne(req.body, { new: true });
+  apartment.images = images;
+  apartment.description = description;
+  apartment.property_type = property_type;
+  apartment.location = location;
+  apartment.status = status;
+  apartment.features = features;
+
+  await apartment.save();
 
   res.redirect(`/lodge-finder/${apartment._id}`);
 };
