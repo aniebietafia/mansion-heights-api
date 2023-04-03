@@ -15,7 +15,7 @@ const getAllProperties = async (req, res) => {
     select: "fullName",
   });
   res.render("property/apartments", {
-    currentUser: req.user.fullName,
+    currentUser: req.user,
     pageTitle: "Lodge Finder",
     apartments,
   });
@@ -70,42 +70,38 @@ const postProperty = async (req, res) => {
 // Get edit apartment form
 const getEditApartmentForm = async (req, res) => {
   const apartment = await Apartment.findById(req.params.id);
-  checkPermissions(req.user, apartment.user);
   if (req.user.role === "admin") {
     return res.render("admin/edit", {
       pageTitle: "Edit Lodge | Admin",
       apartment,
     });
   }
+  checkPermissions(req.user, apartment.user);
   res.render("property/edit", {
     pageTitle: "Edit Lodge",
     apartment,
   });
 };
 
-// User edits the current property
+// controller to update lodge
 const editProperty = async (req, res) => {
   const { id: lodgeId } = req.params;
-  // const id = req.params.id;
+  const apartment = await Apartment.findOne({ _id: lodgeId });
 
-  const apartment = await Apartment.findByIdAndUpdate(
-    { _id: lodgeId },
-    { ...req.body },
-    { new: true, runValidators: true }
-  );
-  // const apartment = await Apartment.findByIdAndUpdate(id, {...req.body}, { new: true, runValidators: true });
+  checkPermissions(req.user, apartment.user);
 
-  if (!apartment) {
-    throw new CustomError.NotFoundError("This apartment does not exist");
-  }
+  await apartment.updateOne(req.body, { new: true });
 
   res.redirect(`/lodge-finder/${apartment._id}`);
 };
 
-// User deletes a property
+// controller to delete lodge
 const deleteProperty = async (req, res) => {
   const { id: propertyId } = req.params;
-  await Apartment.findOneAndRemove({ _id: propertyId });
+  const apartment = await Apartment.findOne({ _id: propertyId });
+  checkPermissions(req.user, apartment.user);
+
+  await apartment.deleteOne();
 
   res.redirect("/lodge-finder/apartments");
 };
