@@ -15,6 +15,15 @@ Lodge Finder is an application that helps people especially University students 
   https://github.com/AfiaAniebiet/mansion-heights-api.git
   ```
 - Install dependencies
+
   ```
   npm install
+  ```
+
+  ## Usage
+
+  - Start the server on port 4000
+
+  ```
+  npm run dev
   ```
