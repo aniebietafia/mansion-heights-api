@@ -25,11 +25,6 @@ const authorizePermissions = (...roles) => {
   };
 };
 
-// const authorizePermissions = (req, res, next) => {
-//   console.log("admin route");
-//   next();
-// };
-
 module.exports = {
   authenticateUser,
   authorizePermissions,
