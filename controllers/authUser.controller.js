@@ -22,7 +22,7 @@ const postUserSignUp = async (req, res) => {
   // Check if the account is first in the database to register, then assign admin role
   const isFirstAccount = (await User.countDocuments({})) === 0;
   if (!isFirstAccount && role === "admin") {
-    req.flash("error", "Choose a different role");
+    req.flash("error", "Admin role exists. Choose a different role");
     return res.redirect("/lodge-finder/user/signup");
   }
   const user = new User({
@@ -79,7 +79,7 @@ const postUserLogin = async (req, res) => {
   const tokenUser = { fullName: user.fullName, userId: user._id, role: user.role };
   attachCookiesToResponse({ res, user: tokenUser });
 
-  // if token is verified, login user and redirect user to the apartments page
+  // if token is verified, login user and redirects user to the apartments page
   res.redirect("/lodge-finder/apartments");
 };
 
