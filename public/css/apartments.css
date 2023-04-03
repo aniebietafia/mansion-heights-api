@@ -42,10 +42,10 @@ Variables
 }
 
 /*
-==========================================================================
+============================================
 Custom Scrollbar -
 credit: CSS-Tricks - https://css-tricks.com/almanac/properties/s/scrollbar/
-=====================================
+============================================
 */
 body::-webkit-scrollbar {
   width: 1em;
@@ -94,7 +94,6 @@ h1,
 h2,
 h3,
 h4 {
-  /* letter-spacing: var(--spacing); */
   text-transform: capitalize;
   line-height: 1.25;
   margin-bottom: 0.75rem;
@@ -168,7 +167,7 @@ Navbar
   top: 0;
   left: 0;
   width: 100%;
-  background: var(--clr-grey-10);
+  background: var(--clr-grey-6);
   box-shadow: var(--dark-shadow);
   z-index: 2;
 }
@@ -215,6 +214,9 @@ Navbar
   color: var(--clr-primary-1);
   background: var(--clr-primary-8);
   padding-left: 2.25rem;
+}
+.current-user {
+  color: var(--clr-white);
 }
 .nav-links {
   height: 0;
@@ -280,7 +282,6 @@ Feature Section
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    /* justify-content: space-between; */
   }
   .features-card {
     flex: 0 0 calc(50% - 2rem);
