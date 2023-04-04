@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&family=Roboto&display=swap");
+
+.form {
+  position: relative;
+}
+
+.form form {
+  height: 100%;
+  padding: 2rem 3rem;
+  width: 50vw;
+  margin: 0 auto;
+}
+
+fieldset {
+  border: 1px solid #53b467;
+  border-radius: 10px;
+  padding: 0.2rem 0.7rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 0px 10px rgba(27, 87, 79, 0.8);
+  padding: 0.75rem 1rem;
+}
+
+legend {
+  font-size: 2rem;
+  padding: 0 0.45rem;
+  text-shadow: 0 0 2px #fff, 0 0 3px #fff, 0 0 4px #353532, 0 0 6px #333331;
+  color: #e06245;
+  font-weight: 700;
+}
+form p {
+  margin-bottom: 10px;
+}
+form div {
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: 0.1rem;
+  position: relative;
+}
+
+label {
+  text-transform: capitalize;
+  color: #217459;
+  font-size: 0.92rem;
+}
+input,
+select {
+  font-size: 0.875rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1.1rem;
+  width: 100%;
+  cursor: text;
+  color: #707070;
+}
+
+select {
+  cursor: pointer;
+}
+
+textarea {
+  min-height: 100px;
+  border-radius: 5px;
+  padding: 1.1rem;
+  margin-bottom: 3px;
+}
+textarea + label {
+  text-transform: none;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+  background-color: #42b490;
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+/* Custom Scroll bar */
+.form::-webkit-scrollbar {
+  width: 1em;
+}
+.form::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.form::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+/* Float label styles */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-bottom: 2px solid #329c7a;
+}
+label,
+input,
+textarea {
+  transition: all.2s;
+}
+input:placeholder-shown + label,
+textarea:placeholder-shown + label {
+  cursor: text;
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: -2.125rem 0;
+  transform: translate(0, 2.125rem) scale(1.25);
+}
+input:not(:placeholder-shown) + label,
+input:focus + label,
+textarea:not(:placeholder-shown) + label,
+textarea:focus + label {
+  transform: translate(0, 0) scale(1);
+  cursor: pointer;
+}
+/* End of float label styles */
