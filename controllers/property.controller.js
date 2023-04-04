@@ -15,7 +15,7 @@ const getAllProperties = async (req, res) => {
     select: "fullName",
   });
   res.render("property/apartments", {
-    currentUser: req.user,
+    userObj: req.user,
     pageTitle: "Lodge Finder",
     apartments,
   });
@@ -44,7 +44,9 @@ const getSingleProperty = async (req, res) => {
 
 // Get Property Register form
 const getPropertyRegisterForm = async (req, res) => {
-  res.render("property/register_property");
+  res.render("property/register_property", {
+    userObj: req.user,
+  });
 };
 
 // User creates a new property
@@ -72,12 +74,14 @@ const getEditApartmentForm = async (req, res) => {
   const apartment = await Apartment.findById(req.params.id);
   if (req.user.role === "admin") {
     return res.render("admin/edit", {
+      userObj: req.user,
       pageTitle: "Edit Lodge | Admin",
       apartment,
     });
   }
   checkPermissions(req.user, apartment.user);
   res.render("property/edit", {
+    userObj: req.user,
     pageTitle: "Edit Lodge",
     apartment,
   });
@@ -85,18 +89,28 @@ const getEditApartmentForm = async (req, res) => {
 
 // controller to update lodge
 const editProperty = async (req, res) => {
-  const { id: lodgeId } = req.params;
-  const { images, description, property_type, location, status, features } = req.body;
-  const apartment = await Apartment.findOne({ _id: lodgeId });
+  const id = req.params.id;
+  const { property_type, location, features, status, description } = req.body;
+  const apartment = await Apartment.findById(id);
+
+  if (req.user.role === "admin") {
+    apartment.property_type = property_type;
+    apartment.location = location;
+    apartment.features = convertFeaturesToArray(features);
+    apartment.status = status;
+    apartment.description = description;
+
+    await apartment.save();
+    return res.redirect(`/lodge-finder/${apartment._id}`);
+  }
 
   checkPermissions(req.user, apartment.user);
 
-  apartment.images = images;
-  apartment.description = description;
   apartment.property_type = property_type;
   apartment.location = location;
+  apartment.features = convertFeaturesToArray(features);
   apartment.status = status;
-  apartment.features = features;
+  apartment.description = description;
 
   await apartment.save();
 
