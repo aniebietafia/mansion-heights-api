@@ -5,36 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/css/navigation.css" />
+    <link rel="stylesheet" href="/css/form.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
   <body>
-    <h1>Register Property</h1>
-    <form action="/lodge-finder/register" method="post" enctype="multipart/form-data">
-      <div>
-        <input type="file" name="image" id="" />
-      </div>
+    <%- include("../partials/navigation.ejs") %>
+    <section class="form">
+      <form action="/lodge-finder/register" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <legend>Register Property</legend>
 
-      <div>
-        <label for="property_type">Property Type</label>
-        <input type="text" name="property_type" id="property_type" />
-      </div>
+          <div>
+            <input type="file" placeholder=" " name="image" id="" />
+            <label for="upload-img"><i class="fa-regular fa-image"></i> Upload Image</label>
+          </div>
 
-      <div>
-        <label for="location">Location</label>
-        <input type="text" name="location" id="location" />
-      </div>
+          <div>
+            <input type="text" placeholder=" " name="property_type" id="property_type" />
+            <label for="property_type"><i class="fa-solid fa-house"></i> Property Type</label>
+          </div>
 
-      <div>
-        <label for="features">Features</label>
-        <input type="text" name="features" id="features" /><br />
-        <small>Enter the apartment features separated by commas</small>
-      </div>
+          <div>
+            <input type="text" placeholder=" " name="location" id="location" />
+            <label for="location"><i class="fa-solid fa-location-dot"></i> Location</label>
+          </div>
 
-      <div>
-        <label for="desc">Description</label>
-        <textarea name="description" id="desc" cols="30" rows="10"></textarea>
-      </div>
+          <div>
+            <input type="text" placeholder="List features separated by commas" name="features" id="features" />
+            <label for="features"><i class="fa-solid fa-list"></i> Features</label>
+          </div>
 
-      <button>Submit</button>
-    </form>
+          <div>
+            <textarea name="description" id="desc" cols="10" rows="15" placeholder=" "></textarea>
+            <label for="desc"><i class="fa-solid fa-pencil"></i> Write a short description of the lodge</label>
+          </div>
+
+          <input type="submit" value="Register Lodge" />
+        </fieldset>
+      </form>
+    </section>
   </body>
 </html>
