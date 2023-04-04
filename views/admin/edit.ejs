@@ -5,8 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/navigation.css" />
   </head>
   <body>
-    <h1>Admin Edit Property</h1>
+    <%- include("../partials/navigation.ejs") %>
+    <h1>Edit Lodge (Admin)</h1>
+    <form action="/lodge-finder/<%= apartment.id %>?_method=PATCH" method="post" enctype="multipart/form-data">
+      <div>
+        <label for="property_type">Property Type</label>
+        <input type="text" name="property_type" id="property_type" value="<%= apartment.property_type %>" />
+      </div>
+
+      <div>
+        <label for="location">Location</label>
+        <input type="text" name="location" id="location" value="<%= apartment.location %>" />
+      </div>
+
+      <div>
+        <label for="features">Features</label>
+        <input type="text" name="features" id="features" value="<%= apartment.features %>" /><br />
+        <small>Enter the apartment features separated by commas</small>
+      </div>
+
+      <div>
+        <label for="desc">Description</label>
+        <textarea name="description" id="desc" cols="30" rows="10"><%= apartment.description %></textarea>
+      </div>
+
+      <div>
+        <label for="status">Status</label>
+        <select name="status" id="status">
+          <option value="none">Choose an option</option>
+          <option value="under review">Under Review</option>
+          <option value="approved">Approved</option>
+        </select>
+      </div>
+
+      <button>Update Lodge</button>
+    </form>
   </body>
 </html>
