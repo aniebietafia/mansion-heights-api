@@ -5,17 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/navigation.css" />
+    <link rel="stylesheet" href="/css/users.css" />
   </head>
   <body>
+    <%- include("../partials/navigation.ejs") %>
     <h1>All Users</h1>
-    <% for (const user of users) { %>
-    <div>
-      <p><%= user.fullName %></p>
-      <p><%= user.role %></p>
-      <p><%= user.gender %></p>
-      <p><%= user.tel_number %></p>
-      <p><%= user.email %></p>
+    <div class="user-container">
+      <% for (const user of users) { %>
+      <div class="user-card">
+        <p>Full Name: <%= user.fullName %></p>
+        <p>Role: <%= user.role %></p>
+        <p>Gender: <%= user.gender %></p>
+        <p>Mobile Number: <%= user.tel_number %></p>
+        <p>Email Address: <%= user.email %></p>
+        <div class="btns">
+          <a href="/lodge-finder/admin/<%= user._id %>/edit-user" class="btn">EDIT</a>
+          <form action="/lodge-finder/admin/<%= user._id %>?_method=DELETE" method="post">
+            <button>DELETE</button>
+          </form>
+        </div>
+      </div>
+      <% } %>
     </div>
-    <% } %>
   </body>
 </html>
