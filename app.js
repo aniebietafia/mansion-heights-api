@@ -29,9 +29,9 @@ const errorHandlerMiddleware = require("./middlewares/errorHandler.middleware");
 // middlewares
 app.use(morgan("tiny"));
 app.use(cors());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser(process.env.SECRET));
 app.use(sessionMiddleware);
 app.use(flash(flashMiddleware));
