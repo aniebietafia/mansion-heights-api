@@ -20,7 +20,7 @@ Lodge Finder is an application that helps people especially University students 
   npm install
   ```
 
-  ## Usage
+## Usage
 
 - Start the server
 
