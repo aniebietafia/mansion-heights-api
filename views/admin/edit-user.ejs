@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pageTitle</title>
+    <link rel="stylesheet" href="/css/navigation.css" />
+    <link rel="stylesheet" href="/css/form.css" />
+  </head>
+  <body>
+    <%- include("../partials/navigation.ejs") %>
+    <section class="form">
+      <form action="/lodge-finder/admin/<%= user._id %>?_method=PATCH" method="post">
+        <fieldset>
+          <legend>Edit User</legend>
+          <p>Edit the fields that you wish to correct.</p>
+          <div>
+            <input type="text" placeholder=" " name="fullName" id="fullName" value="<%= user.fullName %>" />
+            <label for="fullName"><i class="fa fa-user" aria-hidden="true"></i> Full Name</label>
+          </div>
+
+          <div>
+            <input type="email" name="email" id="email" value="<%= user.email %>" />
+            <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
+          </div>
+
+          <div class="form-group">
+            <select name="gender" id="gender" required>
+              <option value="none">Select Option</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="undisclosed">Prefer Not to Say</option>
+            </select>
+            <label for="gender"><i class="fa fa-venus-mars" aria-hidden="true"></i> Gender</label>
+          </div>
+
+          <div class="form-group">
+            <input type="tel" placeholder=" " id="tel" name="tel_number" required value="<%= user.tel_number %>" />
+            <label for="tel"><i class="fa fa-phone" aria-hidden="true"></i> Phone Number</label>
+          </div>
+
+          <div class="form-group">
+            <select name="role" id="user" required>
+              <option value="admin">Admin</option>
+              <option value="Student">Student</option>
+              <option value="Home Owner">Home Owner</option>
+            </select>
+            <label for="user">User Role</label>
+          </div>
+
+          <input type="submit" value="Edit User" />
+        </fieldset>
+      </form>
+    </section>
+  </body>
+</html>
