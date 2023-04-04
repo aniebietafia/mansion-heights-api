@@ -5,32 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/navigation.css">
     <link rel="stylesheet" href="/css/apartment.css" />
   </head>
   <body>
-    <header>
-      <nav class="nav-bar">
-        <div class="nav-center">
-          <div class="nav-header">
-            <h2 class="nav-logo">Lodge<span>Finder</span></h2>
-          </div>
-
-          <ul class="nav-links">
-            <li><a href="/lodge-finder/apartments" class="nav-link">All Apartments</a></li>
-            <li><a href="/lodge-finder/register" class="nav-link">Add Property</a></li>
-            <li><a href="/lodge-finder/admin/users" class="nav-link">All Users</a></li>
-          </ul>
-
-          <p class="current-user">Logged in as: <%= userObj.fullName %></p>
-
-          <div class="logout">
-            <form action="/lodge-finder/user/logout" method="post">
-              <button class="btn">Logout</button>
-            </form>
-          </div>
-        </div>
-      </nav>
-    </header>
+<%- include("../partials/navigation.ejs") %>
 
     <article class="features-card">
       <% for (let img of apartment.images) { %>
@@ -50,11 +29,14 @@
         </div>
         <p><%= apartment.description %></p>
 
-        <% for (const feature of apartment.features){%>
-        <ul>
-          <li><%= feature %></li>
-        </ul>
-        <%} %>
+        <p>
+          Lodge Features:
+          <% for (const feature of apartment.features){%>
+          <ul>
+            <li><%= feature %></li>
+          </ul>
+          <%} %>
+        </p>
       </div>
 
       <% if (userObj.role === 'Student'){%>
