@@ -30,12 +30,12 @@ Lodge Finder is an application that helps people especially University students 
 
 - Enter the address in a web browser
 
-```
-http://localhost:4000 - Opens the starting page of the web app.
-```
+  ```
+  http://localhost:4000 - Opens the starting page of the web app.
+  ```
 
 - Signup and Login
 
-```
-Signup with your unique email address to access the lodge page
-```
+  ```
+  Signup with your unique email address to access the lodge page
+  ```
