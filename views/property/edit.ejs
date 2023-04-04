@@ -5,14 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/navigation.css" />
   </head>
   <body>
+    <%- include("../partials/navigation.ejs") %>
     <h1>Edit Lodge</h1>
     <form action="/lodge-finder/<%= apartment.id %>?_method=PATCH" method="post" enctype="multipart/form-data">
-      <div>
-        <input type="file" name="image" id="" />
-      </div>
-
       <div>
         <label for="property_type">Property Type</label>
         <input type="text" name="property_type" id="property_type" value="<%= apartment.property_type %>" />
