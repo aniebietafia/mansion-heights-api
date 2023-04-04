@@ -22,8 +22,10 @@ Lodge Finder is an application that helps people especially University students 
 
   ## Usage
 
-  - Start the server on port 4000
-
   ```
-  npm run dev
+  - npm run dev - starts the server on port:4000
+
+  - http://localhost:4000 - Opens the starting page of the web app.
+
+  - Signup with your unique email address to access the lodge page
   ```
