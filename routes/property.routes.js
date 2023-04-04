@@ -24,7 +24,11 @@ router
 router
   .route("/lodge-finder/:id")
   .get(authenticateUser, apartmentController.getSingleProperty)
-  .patch([authenticateUser, authorizePermissions("admin", "Home Owner")], apartmentController.editProperty)
+  .patch(
+    [authenticateUser, authorizePermissions("admin", "Home Owner")],
+    upload.array("image"),
+    apartmentController.editProperty
+  )
   .delete([authenticateUser, authorizePermissions("admin", "Home Owner")], apartmentController.deleteProperty);
 
 router
