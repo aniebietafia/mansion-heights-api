@@ -1,0 +1,25 @@
+<header>
+  <nav class="nav-bar">
+    <div class="nav-center">
+      <div class="nav-header">
+        <h2 class="nav-logo">Lodge<span>Finder</span></h2>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="/lodge-finder/apartments" class="nav-link">All Apartments</a></li>
+        <li><a href="/lodge-finder/register" class="nav-link">Add Property</a></li>
+        <% if (userObj.role === "admin") {%>
+        <li><a href="/lodge-finder/admin/users" class="nav-link">All Users</a></li>
+        <%}%>
+      </ul>
+
+      <p class="current-user">Logged in as: <%= userObj.fullName %></p>
+
+      <div class="logout">
+        <form action="/lodge-finder/user/logout" method="post">
+          <button class="btn">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
