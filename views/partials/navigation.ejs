@@ -7,8 +7,9 @@
 
       <ul class="nav-links">
         <li><a href="/lodge-finder/apartments" class="nav-link">All Apartments</a></li>
+        <% if (userObj.role === "admin" || userObj.role === "Home Owner") {%>
         <li><a href="/lodge-finder/register" class="nav-link">Add Property</a></li>
-        <% if (userObj.role === "admin") {%>
+        <%}%> <% if (userObj.role === "admin") {%>
         <li><a href="/lodge-finder/admin/users" class="nav-link">All Users</a></li>
         <%}%>
       </ul>
