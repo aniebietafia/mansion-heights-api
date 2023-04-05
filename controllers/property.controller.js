@@ -21,7 +21,7 @@ const getAllProperties = async (req, res) => {
   });
 };
 
-// Get a Single Product
+// controller to get a Single Product
 const getSingleProperty = async (req, res) => {
   const id = req.params.id;
   const apartment = await Apartment.findById(id).populate({
@@ -33,6 +33,7 @@ const getSingleProperty = async (req, res) => {
     throw new CustomError.NotFoundError("Apartment does not exist.");
   }
 
+  // update apartment views by 1
   apartment.view_count += 1;
   await apartment.save();
   res.render("property/apartment", {
@@ -104,6 +105,7 @@ const editProperty = async (req, res) => {
     return res.redirect(`/lodge-finder/${apartment._id}`);
   }
 
+  // check user permissions middleware
   checkPermissions(req.user, apartment.user);
 
   apartment.property_type = property_type;
@@ -121,6 +123,7 @@ const editProperty = async (req, res) => {
 const deleteProperty = async (req, res) => {
   const { id: propertyId } = req.params;
   const apartment = await Apartment.findOne({ _id: propertyId });
+
   checkPermissions(req.user, apartment.user);
 
   await apartment.deleteOne();
