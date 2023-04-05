@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
+const Apartment = require("./property.models");
 // const passportLocalMongoose = require("passport-local-mongoose");
 
 const UserSchema = new Schema(
@@ -19,7 +20,12 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordTokenExpiration: {
+      type: Date,
     },
     gender: {
       type: String,
@@ -34,6 +40,12 @@ const UserSchema = new Schema(
       enum: ["Home Owner", "Student", "admin"],
       required: true,
     },
+    apartments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Apartment",
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -49,5 +61,12 @@ UserSchema.methods.comparePassword = async function (enteredPassword) {
   const isPasswordMatch = await bcrypt.compare(enteredPassword, this.password);
   return isPasswordMatch;
 };
+
+// delete a user with associated apartments
+UserSchema.post("findOneAndDelete", async function (user) {
+  if (user.apartments.length) {
+    await Apartment.deleteMany({ _id: { $in: user.apartments } });
+  }
+});
 
 module.exports = mongoose.model("User", UserSchema);
