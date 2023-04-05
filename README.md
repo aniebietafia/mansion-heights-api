@@ -1,5 +1,7 @@
 # Lodge Finder API
 
+<img src="./assets/banner.jpg" alt="Banner">
+
 ## Introduction
 
 Lodge Finder is an application that helps people especially University students and NYSC members to find apartments that suits them at a fair price. Why only university students and NYSC members? These are the set of people are relocate from city to city every year. Most times, they move to cities that they are not familiar with anybody and to prevent them from being defrauded, this project has been developed to help them get apartment even before they move. <a href="https://lodge-finder.netlify.app">Live Site</a>.
