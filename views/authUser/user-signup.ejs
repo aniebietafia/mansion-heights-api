@@ -5,60 +5,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= pageTitle %></title>
-    <link rel="stylesheet" href="/css/signup.css" />
-    <script src="/js/signup.js" defer></script>
+    <link rel="stylesheet" href="/css/form.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>Sign Up Today</h1>
-
+    <section class="form">
       <form action="/lodge-finder/user/signup" method="post" novalidate>
-        <div class="form-group">
-          <label for="fullName">Full Name</label>
-          <input type="text" name="fullName" id="fullName" required />
-        </div>
+        <fieldset>
+          <legend>Sign Up Today</legend>
+          <p>Have an account already? <a href="/lodge-finder/user/login">Login</a></p>
 
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" name="email" id="email" required />
-          <small><%= signupError %></small>
-        </div>
+          <div>
+            <input type="text" name="fullName" id="fullName" required placeholder=" " />
+            <label for="fullName">Full Name</label>
+          </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password" required />
-        </div>
+          <div>
+            <input type="email" name="email" id="email" required placeholder=" " />
+            <label for="email">Email Address</label>
+            <small><%= signupError %></small>
+          </div>
 
-        <div class="form-group">
-          <label for="gender">Gender</label>
-          <select name="gender" id="gender" required>
-            <option value="none">Select Option</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="undisclosed">Prefer Not to Say</option>
-          </select>
-        </div>
+          <div>
+            <input type="password" name="password" id="password" required placeholder=" " />
+            <label for="password">Password</label>
+          </div>
 
-        <div class="form-group">
-          <label for="tel">Phone Number</label>
-          <input type="tel" id="tel" name="tel_number" required />
-        </div>
+          <div>
+            <select name="gender" id="gender" required>
+              <option value="none">Select Option</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="undisclosed">Prefer Not to Say</option>
+            </select>
+            <label for="gender">Gender</label>
+          </div>
 
-        <div class="form-group">
-          <label for="user">User Role</label>
-          <select name="role" id="user" required>
-            <option value="admin">Select Option</option>
-            <option value="Student">Student</option>
-            <option value="Home Owner">Home Owner</option>
-          </select>
-          <small><%= signupError %></small>
-        </div>
-        <button type="submit">Sign Up</button>
+          <div>
+            <input type="tel" id="tel" name="tel_number" required placeholder=" " />
+            <label for="tel">Phone Number</label>
+          </div>
+
+          <div>
+            <select name="role" id="user" required>
+              <option value="admin">Select Option</option>
+              <option value="Student">Student</option>
+              <option value="Home Owner">Home Owner</option>
+            </select>
+            <label for="user">User Role</label>
+            <small><%= signupError %></small>
+          </div>
+          <input type="submit" value="Sign Up" />
+        </fieldset>
       </form>
-      <!-- Message container -->
-      <!-- <div class="message-container">
-        <h3 id="message"></h3>
-      </div> -->
-    </div>
+    </section>
   </body>
 </html>
