@@ -43,7 +43,6 @@ Variables
   display: flex;
   flex-wrap: wrap;
   margin: 0 2rem;
-  width: 90vw;
   gap: 10px;
 }
 h1 {
