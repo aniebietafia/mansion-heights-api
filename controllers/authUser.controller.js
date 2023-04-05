@@ -1,6 +1,17 @@
+const crypto = require("crypto");
 const User = require("../models/user.models");
-const { attachCookiesToResponse, createTokenUser } = require("../utils/index");
+const { attachCookiesToResponse, createTokenUser, sendResetPasswordEmail, createHash } = require("../utils");
 const { capitalizeFullName, lowerCaseEmail } = require("../utils/algorithms");
+const CustomError = require("../errors");
+
+// const transporter = nodemailer.createTransport({
+//   host: process.env.ETHEREAL_HOST,
+//   port: process.env.ETHEREAL_PORT,
+//   auth: {
+//     user: process.env.ETHEREAL_USER,
+//     pass: process.env.ETHEREAL_HOST_PASS,
+//   },
+// });
 
 // Get Sign up Form
 const getUserSignUpForm = (req, res) => {
@@ -12,10 +23,9 @@ const getUserSignUpForm = (req, res) => {
 
 // Register New User
 const postUserSignUp = async (req, res) => {
-  const { fullName, email, password, gender, tel_number, role } = req.body;
+  const { fullName, email, password, gender, tel_number, role, apartments } = req.body;
   const emailExists = await User.findOne({ email: email });
   if (emailExists) {
-    // throw new CustomError.BadRequestError("Email already exists. Try another email.");
     req.flash("error", "Email already exists. Try another email.");
     return res.redirect("/lodge-finder/user/signup");
   }
@@ -32,9 +42,11 @@ const postUserSignUp = async (req, res) => {
     gender,
     tel_number,
     role,
+    apartments,
   });
   await user.save();
 
+  // create token and attach to a user
   const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
 
@@ -93,10 +105,65 @@ const logout = (req, res) => {
   res.redirect("/lodge-finder/user/login");
 };
 
+// fetch reset password form
+const resetPasswordForm = async (req, res) => {
+  res.render("authUser/reset-password", {
+    pageTitle: "Reset Password",
+  });
+};
+
+// controller to send reset password request
+const resetPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    throw new CustomError.BadRequestError("Provide a valid email address");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    const resetPasswordToken = crypto.randomBytes(32).toString("hex");
+
+    // send email to user
+    const origin = "http://localhost:4000/lodge-finder";
+    await sendResetPasswordEmail({
+      fullName: user.fullName,
+      email: user.email,
+      token: resetPasswordToken,
+      origin,
+    });
+
+    const expiration = 1000 * 60 * 10; //sets token expiration to ten minutes
+    const resetPasswordTokenExpiration = new Date(Date.now() + expiration);
+
+    user.resetPasswordToken = createHash(resetPasswordToken);
+    user.resetPasswordTokenExpiration = resetPasswordTokenExpiration;
+    await user.save();
+  }
+
+  res.redirect("/lodge-finder/user/login");
+};
+
+// controller to render new password form
+const newPasswordForm = async (req, res) => {
+  res.render("authUser/new-password", {
+    pageTitle: "Lodge Finder | New Password",
+  });
+};
+
+// controller to post new password
+const postNewPassword = async (req, res) => {
+  res.send("Post New Password");
+};
+
 module.exports = {
   getUserSignUpForm,
   postUserSignUp,
   getLoginForm,
   postUserLogin,
   logout,
+  resetPasswordForm,
+  resetPassword,
+  newPasswordForm,
+  postNewPassword,
 };
