@@ -1,6 +1,6 @@
 # Lodge Finder API
 
-<img src="./assets/banner.jpg" alt="Banner">
+<img src="./assets/banner.png" alt="Banner">
 
 ## Introduction
 
