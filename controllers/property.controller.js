@@ -66,6 +66,7 @@ const postProperty = async (req, res) => {
     url: el.path,
     filename: el.filename,
   }));
+  req.user.apartments = req.user.userId;
   await apartment.save();
   res.redirect(`/lodge-finder/${apartment._id}`);
 };
