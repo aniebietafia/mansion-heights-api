@@ -11,12 +11,18 @@ const lowerCaseEmail = (email) => {
 };
 
 // Algorithm to format the features input field and store it in the database as an array
-const convertFeaturesToArray = (userInput) => {
-  const arrayOfFeatures = userInput.split(",");
-  const removeWhiteSpaces = arrayOfFeatures.map((feature) => {
-    return feature.trim().substring(0, 1).toUpperCase() + feature.substring(1).toLowerCase();
+// const convertFeaturesToArray = (userInput) => {
+//   const arrayOfFeatures = userInput.split(",");
+//   const removeWhiteSpaces = arrayOfFeatures.map((feature) => {
+//     return feature.trim().substring(0, 1).toUpperCase() + feature.substring(1).toLowerCase();
+//   });
+//   return removeWhiteSpaces;
+// };
+const convertFeaturesToArray = (...featuresInput) => {
+  const result = featuresInput.map((feature) => {
+    return feature.substring(0, 1).toUpperCase() + feature.substring(1).toLowerCase();
   });
-  return removeWhiteSpaces;
+  return result;
 };
 
 module.exports = {
